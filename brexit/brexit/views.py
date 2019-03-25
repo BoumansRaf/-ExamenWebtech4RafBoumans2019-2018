@@ -7,10 +7,12 @@ import os.path
 from dateutil.relativedelta import relativedelta
 import datetime
 
+
 def brexit(request):
-    today = datetime.datetime.now
-    rd = relativedelta(today,datetime.datetime(2019,3,29,23))
-    s = rd.seconds
+    today = datetime.datetime.now()
+    
+    rd = relativedelta(datetime.datetime(2019,3,29,23), today)
+    s = 'Days:' + str(rd.days) + ' hours: ' + str(rd.hours) + ' Minutes: ' + str(rd.minutes) + ' seconds: ' + str(rd.seconds)
 
     return HttpResponse(s)
 
