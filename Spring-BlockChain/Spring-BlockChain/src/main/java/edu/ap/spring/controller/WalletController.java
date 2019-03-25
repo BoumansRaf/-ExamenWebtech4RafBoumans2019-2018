@@ -1,5 +1,7 @@
 package edu.ap.spring.controller;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,27 @@ public class WalletController {
     @Autowired
 	private BlockChain bChain;
 	@Autowired
-	private Wallet coinbase, walletA, walletB;
+    private Wallet  coinbase,walletA, walletB;
     private Transaction genesisTransaction;
+    
+    @PostConstruct
+    public void init() {
+		bChain.setSecurity();
+		coinbase.generateKeyPair();
+		walletA.generateKeyPair();
+		walletB.generateKeyPair();
+
+		//create genesis transaction, which sends 100 coins to walletA:
+		genesisTransaction = new Transaction(coinbase.getPublicKey(), walletA.getPublicKey(), 100f);
+		genesisTransaction.generateSignature(coinbase.getPrivateKey());	 // manually sign the genesis transaction	
+		genesisTransaction.transactionId = "0"; // manually set the transaction id
+						
+		//creating and Mining Genesis block
+		Block genesis = new Block();
+		genesis.setPreviousHash("0");
+		genesis.addTransaction(genesisTransaction, bChain);
+		bChain.addBlock(genesis);
+	}
     
     
    

@@ -9,13 +9,13 @@ public class WalletModel {
   
     private String name;
 
-    private double balance;
+    private float balance;
 
 
     public WalletModel() {
     }
 
-    public WalletModel(String name, double balance){
+    public WalletModel(String name, float balance){
         this.name = name;
         this.balance = balance;
 
@@ -38,11 +38,11 @@ public class WalletModel {
         this.name = name;
     }
 
-    public double getBalance() {
+    public float getBalance() {
         return this.balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
